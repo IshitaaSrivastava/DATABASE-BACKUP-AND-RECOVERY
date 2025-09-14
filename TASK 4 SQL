@@ -1,0 +1,66 @@
+TASK 4 SQL
+
+Backup Script
+
+Command:
+mysqldump -u root -p intern_testdb > intern_testdb_backup.sql
+
+Explanation:
+- This command exports the database `intern_testdb` into a .sql file.
+- It includes all tables and data.
+
+Recovery Script
+
+Command:
+mysql -u root -p -e "CREATE DATABASE intern_testdb;"
+mysql -u root -p intern_testdb < intern_testdb_backup.sql
+
+Explanation:
+- First line creates the database again if it was deleted.
+- Second line restores data from the backup file.
+
+ Documentation of the Process
+
+Create Test Database and Table
+
+CREATE DATABASE intern_testdb;
+
+USE intern_testdb;
+
+CREATE TABLE students (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50),
+  email VARCHAR(100)
+);
+
+INSERT INTO students (name, email) VALUES
+('Alice', 'alice@example.com'),
+('Bob', 'bob@example.com');
+
+
+Backup the Database
+
+Run the backup command:
+
+mysqldump -u root -p intern_testdb > intern_testdb_backup.sql
+
+
+Simulate Data Loss
+
+Drop the database (to simulate failure):
+
+DROP DATABASE intern_testdb;
+
+
+Restore the Database
+
+Run recovery commands:
+
+mysql -u root -p -e "CREATE DATABASE intern_testdb;"
+mysql -u root -p intern_testdb < intern_testdb_backup.sql
+
+
+Verify the Restoration
+
+USE intern_testdb;
+SELECT * FROM students;
